@@ -1,0 +1,10 @@
+^shinyvs\.Rproj$
+^\.Rproj\.user$
+^LICENSE\.md$
+^srcjs$
+^node_modules$
+^package\.json$
+^package-lock\.json$
+^webpack\.dev\.js$
+^webpack\.prod\.js$
+^webpack\.common\.js$
