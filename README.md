@@ -2,6 +2,7 @@
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/dreamRs/shinyvs/workflows/R-CMD-check/badge.svg)](https://github.com/dreamRs/shinyvs/actions)
 <!-- badges: end -->
 
 Virtual Select widget for [shiny](https://shiny.rstudio.com/) applications built for performance. Powered by [virtual-select](https://github.com/sa-si-dev/virtual-select).
