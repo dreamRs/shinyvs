@@ -11,6 +11,10 @@ virtualSelectInput(
   selected = NULL,
   multiple = FALSE,
   search = FALSE,
+  hideClearButton = FALSE,
+  showSelectedOptionsFirst = FALSE,
+  showValueAsTags = FALSE,
+  ...,
   inline = FALSE,
   width = NULL
 )
@@ -20,7 +24,12 @@ virtualSelectInput(
 
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
-\item{choices}{List of choices}
+\item{choices}{List of choices, \strong{warning} format is a little different than \code{\link[shiny:selectInput]{shiny::selectInput()}}.
+You can use:
+\itemize{
+\item \code{vector} use a simple vector for better performance.
+\item \code{list} custom list allowing to use more options, must correspond to \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select specifications}
+}}
 
 \item{selected}{The initially selected value (or multiple values if \code{multiple = TRUE}). If not specified then defaults to the first value for
 single-select lists and no values for multiple select lists.}
@@ -28,6 +37,15 @@ single-select lists and no values for multiple select lists.}
 \item{multiple}{Is selection of multiple items allowed?}
 
 \item{search}{Enable search feature.}
+
+\item{hideClearButton}{Hide clear value button.}
+
+\item{showSelectedOptionsFirst}{Show selected options at the top of the dropbox.}
+
+\item{showValueAsTags}{Show each selected values as tags with remove icon.}
+
+\item{...}{Other arguments passed to JavaScript method, see
+\href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select documentation} for a full list of options.}
 
 \item{inline}{Display inline with label or not.}
 

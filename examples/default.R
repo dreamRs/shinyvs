@@ -6,7 +6,6 @@ ui <- fluidPage(
   virtualSelectInput(
     inputId = "single",
     label = "Single select (with 97310 choices) :",
-    # choices = month.name,
     choices = sort(unique(babynames::babynames$name)),
     search = TRUE
   ),

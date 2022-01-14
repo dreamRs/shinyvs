@@ -12,8 +12,8 @@ Virtual Select widget for [shiny](https://shiny.rstudio.com/) applications built
 You can install the development version of shinyvs from [GitHub](https://github.com/dreamRs/shinyvs) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("dreamRs/shinyvs")
+# install.packages("remotes")
+remotes::install_github("dreamRs/shinyvs")
 ```
 
 
