@@ -1,33 +1,36 @@
 
-#' Virtual Select Input
+#' @title Virtual Select Input
 #'
-#' @param inputId
-#' @param label
-#' @param choices
-#' @param selected
-#' @param multiple
-#' @param width
+#' @description A select dropdown widget made for performance,
+#'  based on [virtual-select](https://github.com/sa-si-dev/virtual-select).
 #'
-#' @return
+#' @param choices List of choices
+#' @inheritParams shiny::selectInput
+#' @param search Enable search feature.
+#' @param inline Display inline with label or not.
+#'
+#' @return A `shiny.tag.list` object that can be used in a UI definition.
 #' @export
 #'
 #' @importFrom htmltools tags tagList css validateCssUnit htmlDependency
 #' @importFrom shiny restoreInput
 #' @importFrom jsonlite toJSON
 #'
-#' @examples
+#' @example examples/default.R
 virtualSelectInput <- function(inputId,
                                label,
                                choices,
                                selected = NULL,
                                multiple = FALSE,
                                search = FALSE,
+                               inline = FALSE,
                                width = NULL) {
   selected <- restoreInput(id = inputId, default = selected)
   config <- list(
     options = choices,
     multiple = multiple,
-    search = search
+    search = search,
+    selectedValue = selected
   )
   vsTag <- tags$div(
     class = "form-group shiny-input-container",
@@ -45,7 +48,7 @@ virtualSelectInput <- function(inputId,
       style = css(
         width = validateCssUnit(width),
         maxWidth = validateCssUnit(width),
-        display = "block"
+        display = if (!inline) "block"
       ),
       tags$script(
         type = "application/json",

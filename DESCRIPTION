@@ -21,3 +21,5 @@ Imports:
     htmltools,
     jsonlite,
     shiny
+Suggests: 
+    babynames

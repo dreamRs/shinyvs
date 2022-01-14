@@ -1,6 +1,7 @@
 ^shinyvs\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^examples$
 ^srcjs$
 ^node_modules$
 ^package\.json$
