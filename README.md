@@ -19,7 +19,7 @@ remotes::install_github("dreamRs/shinyvs")
 
 ## Example
 
-Minimal example with 97310 from [babynames](https://github.com/hadley/babynames) package:
+Minimal example with 97310 choices from [babynames](https://github.com/hadley/babynames) package:
 
 ``` r
 library(shiny)
