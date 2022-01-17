@@ -45,6 +45,8 @@ single-select lists and no values for multiple select lists.}
 
 \item{showValueAsTags}{Show each selected values as tags with remove icon.}
 
+\item{optionsCount}{No.of options to show on viewport.}
+
 \item{...}{Other arguments passed to JavaScript method, see
 \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select documentation} for a full list of options.}
 

@@ -13,7 +13,7 @@
 #' @param hideClearButton Hide clear value button.
 #' @param showSelectedOptionsFirst Show selected options at the top of the dropbox.
 #' @param showValueAsTags Show each selected values as tags with remove icon.
-#' @param optionsCount No.of options to show on viewport .
+#' @param optionsCount No.of options to show on viewport.
 #' @param ... Other arguments passed to JavaScript method, see
 #'  [virtual-select documentation](https://sa-si-dev.github.io/virtual-select/#/properties) for a full list of options.
 #' @param inline Display inline with label or not.
