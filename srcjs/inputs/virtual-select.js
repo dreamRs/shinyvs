@@ -4,6 +4,18 @@ import "virtual-select-plugin/dist/virtual-select.min.css";
 import "virtual-select-plugin/dist/virtual-select.min.js";
 
 
+function transpose(data) {
+  var res = [];
+  var key, i;
+  for (key in data) {
+    for (i = 0; i < data[key].length; i++) {
+      res[i] = res[i] || {};
+      if (data[key][i] !== undefined) res[i][key] = data[key][i];
+    }
+  }
+  return res;
+}
+
 var virtualSelectBinding = new Shiny.InputBinding();
 
 $.extend(virtualSelectBinding, {
@@ -25,11 +37,22 @@ $.extend(virtualSelectBinding, {
     $(el).off(".virtualSelectBinding");
   },
   initialize: (el) => {
-    var config = el.querySelector('script[data-for="' + el.id + '"]');
-    config = JSON.parse(config.text);
-    console.log(config);
-    if (Array.isArray(config.options) && typeof config.options[0] == "string") {
-      config.options = config.options.map(function(x) {return {label: x, value: x};});
+    var data = el.querySelector('script[data-for="' + el.id + '"]');
+    data = JSON.parse(data.text);
+    var config = data.config;
+    var options = data.options;
+    if (options.type == "vector") {
+      config.options = options.choices.map((x) => {return {label: x, value: x};});
+    } else if (options.type == "transpose") {
+      config.options = transpose(options.choices);
+    } else if (options.type == "transpose_group") {
+      var choices = options.choices;
+      for (var i = 0; i < choices.length; i++) {
+        choices[i].options = transpose(choices[i].options);
+      }
+      config.options = choices;
+    } else {
+      config.options = options.choices;
     }
     config.ele = el;
     VirtualSelect.init(config);

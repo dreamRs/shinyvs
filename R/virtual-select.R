@@ -38,15 +38,17 @@ virtualSelectInput <- function(inputId,
                                inline = FALSE,
                                width = NULL) {
   selected <- restoreInput(id = inputId, default = selected)
-  config <- list(
-    options = choices,
-    multiple = multiple,
-    search = search,
-    selectedValue = selected,
-    hideClearButton = hideClearButton,
-    showSelectedOptionsFirst = showSelectedOptionsFirst,
-    showValueAsTags = showValueAsTags,
-    ...
+  data <- list(
+    options = process_choices(choices),
+    config = list(
+      multiple = multiple,
+      search = search,
+      selectedValue = selected,
+      hideClearButton = hideClearButton,
+      showSelectedOptionsFirst = showSelectedOptionsFirst,
+      showValueAsTags = showValueAsTags,
+      ...
+    )
   )
   vsTag <- tags$div(
     class = "form-group shiny-input-container",
@@ -69,7 +71,7 @@ virtualSelectInput <- function(inputId,
       tags$script(
         type = "application/json",
         `data-for` = inputId,
-        toJSON(config, auto_unbox = TRUE, json_verbatim = TRUE)
+        toJSON(data, auto_unbox = TRUE, json_verbatim = TRUE)
       )
     )
   )

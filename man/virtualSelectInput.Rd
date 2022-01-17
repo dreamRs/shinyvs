@@ -68,7 +68,6 @@ ui <- fluidPage(
   virtualSelectInput(
     inputId = "single",
     label = "Single select (with 97310 choices) :",
-    # choices = month.name,
     choices = sort(unique(babynames::babynames$name)),
     search = TRUE
   ),
@@ -77,12 +76,7 @@ ui <- fluidPage(
   virtualSelectInput(
     inputId = "multiple",
     label = "Multiple select:",
-    choices = lapply(
-      X = seq_len(12),
-      FUN = function(i) {
-        list(label = month.name[i], value = month.abb[i])
-      }
-    ),
+    choices = setNames(month.abb, month.name),
     selected = "Jun",
     multiple = TRUE
   ),
