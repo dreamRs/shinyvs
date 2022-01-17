@@ -13,6 +13,7 @@
 #' @param hideClearButton Hide clear value button.
 #' @param showSelectedOptionsFirst Show selected options at the top of the dropbox.
 #' @param showValueAsTags Show each selected values as tags with remove icon.
+#' @param optionsCount No.of options to show on viewport .
 #' @param ... Other arguments passed to JavaScript method, see
 #'  [virtual-select documentation](https://sa-si-dev.github.io/virtual-select/#/properties) for a full list of options.
 #' @param inline Display inline with label or not.
@@ -34,6 +35,7 @@ virtualSelectInput <- function(inputId,
                                hideClearButton = FALSE,
                                showSelectedOptionsFirst = FALSE,
                                showValueAsTags = FALSE,
+                               optionsCount = 10,
                                ...,
                                inline = FALSE,
                                width = NULL) {
@@ -47,6 +49,7 @@ virtualSelectInput <- function(inputId,
       hideClearButton = hideClearButton,
       showSelectedOptionsFirst = showSelectedOptionsFirst,
       showValueAsTags = showValueAsTags,
+      optionsCount = optionsCount,
       ...
     )
   )

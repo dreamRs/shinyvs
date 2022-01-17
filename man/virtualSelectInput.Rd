@@ -14,6 +14,7 @@ virtualSelectInput(
   hideClearButton = FALSE,
   showSelectedOptionsFirst = FALSE,
   showValueAsTags = FALSE,
+  optionsCount = 10,
   ...,
   inline = FALSE,
   width = NULL
