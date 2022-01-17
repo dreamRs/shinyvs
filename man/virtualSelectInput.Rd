@@ -64,6 +64,7 @@ based on \href{https://github.com/sa-si-dev/virtual-select}{virtual-select}.
 }
 \examples{
 library(shiny)
+library(shinyvs)
 
 ui <- fluidPage(
   tags$h2("Virtual Select"),

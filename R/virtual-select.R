@@ -85,3 +85,33 @@ virtualSelectInput <- function(inputId,
     script = "virtual-select.js"
   ))
 }
+
+
+
+#' Update virtual select from server
+#'
+#' @inheritParams virtualSelectInput
+#' @inheritParams shiny::updateSelectInput
+#'
+#' @return No value.
+#' @export
+#' 
+#' @importFrom shiny getDefaultReactiveDomain
+#' @importFrom htmltools doRenderTags
+#'
+#' @example examples/update.R
+updateVirtualSelect <- function(inputId,
+                                label = NULL,
+                                selected = NULL,
+                                session = shiny::getDefaultReactiveDomain()) {
+  if (!is.null(label))
+    label <- doRenderTags(label)
+  message <- dropNulls(list(
+    label = label,
+    selected = selected
+  ))
+  session$sendInputMessage(inputId, message)
+}
+
+
+

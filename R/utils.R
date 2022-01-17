@@ -1,3 +1,6 @@
+dropNulls <- function(x) {
+  x[!vapply(x, is.null, FUN.VALUE = logical(1))]
+}
 
 #' @importFrom rlang is_list is_named has_name
 is_formatted <- function(x) {

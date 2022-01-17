@@ -36,6 +36,18 @@ $.extend(virtualSelectBinding, {
   unsubscribe: (el) => {
     $(el).off(".virtualSelectBinding");
   },
+  receiveMessage: (el, data) => {
+    
+    if (data.hasOwnProperty("label")) {
+      var label = document.getElementById(el.id + "-label");
+      label.innerHTML = data.label;
+    }
+    
+    if (data.hasOwnProperty("selected")) {
+      el.setValue(data.selected);
+    }
+    
+  },
   initialize: (el) => {
     var data = el.querySelector('script[data-for="' + el.id + '"]');
     data = JSON.parse(data.text);

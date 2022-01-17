@@ -1,4 +1,5 @@
 library(shiny)
+library(shinyvs)
 
 ui <- fluidPage(
   tags$h2("Virtual Select"),
