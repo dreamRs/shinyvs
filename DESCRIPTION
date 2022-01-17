@@ -1,5 +1,5 @@
 Package: shinyvs
-Title: What the Package Does (One Line, Title Case)
+Title: Select Menu Widget for 'shiny' Applications
 Version: 0.0.0.9000
 Authors@R: 
     c(person(given = "Victor",
@@ -12,7 +12,7 @@ Authors@R:
       person(given = "Sa Si Dev",
              role = "cph",
              comment = "Virtual Select <https://github.com/sa-si-dev/virtual-select>"))
-Description: What the package does (one paragraph).
+Description: A select dropdown widget that support a lot of choices to be used in 'shiny' applications.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

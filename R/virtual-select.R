@@ -62,8 +62,8 @@ virtualSelectInput <- function(inputId,
       id = inputId,
       class = "virtual-select",
       style = css(
-        width = validateCssUnit(width),
-        maxWidth = validateCssUnit(width),
+        width = "100%",
+        maxWidth = "none",
         display = if (!inline) "block"
       ),
       tags$script(
