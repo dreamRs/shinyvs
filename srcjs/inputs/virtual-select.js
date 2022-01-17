@@ -47,6 +47,25 @@ $.extend(virtualSelectBinding, {
       el.setValue(data.selected);
     }
     
+    if (data.hasOwnProperty("options")) {
+      var options = data.options;
+      var newOptions;
+      if (options.type == "vector") {
+        newOptions = options.choices.map((x) => {return {label: x, value: x};});
+      } else if (options.type == "transpose") {
+        newOptions = transpose(options.choices);
+      } else if (options.type == "transpose_group") {
+        var choices = options.choices;
+        for (var i = 0; i < choices.length; i++) {
+          choices[i].options = transpose(choices[i].options);
+        }
+        newOptions = choices;
+      } else {
+        newOptions = options.choices;
+      }
+      el.setOptions(newOptions);
+    }
+    
   },
   initialize: (el) => {
     var data = el.querySelector('script[data-for="' + el.id + '"]');

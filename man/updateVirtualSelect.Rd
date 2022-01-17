@@ -7,6 +7,7 @@
 updateVirtualSelect(
   inputId,
   label = NULL,
+  choices = NULL,
   selected = NULL,
   session = shiny::getDefaultReactiveDomain()
 )
@@ -15,6 +16,13 @@ updateVirtualSelect(
 \item{inputId}{The \code{input} slot that will be used to access the value.}
 
 \item{label}{Display label for the control, or \code{NULL} for no label.}
+
+\item{choices}{List of choices, \strong{warning} format is a little different than \code{\link[shiny:selectInput]{shiny::selectInput()}}.
+You can use:
+\itemize{
+\item \code{vector} use a simple vector for better performance.
+\item \code{list} custom list allowing to use more options, must correspond to \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select specifications}
+}}
 
 \item{selected}{The initially selected value (or multiple values if \code{multiple = TRUE}). If not specified then defaults to the first value for
 single-select lists and no values for multiple select lists.}
@@ -44,14 +52,21 @@ ui <- fluidPage(
   textInput("label_text", label = "With text:"),
   textInput("label_html", label = "With HTML:"),
   
-  
   virtualSelectInput(
     inputId = "sel2",
-    label = "Update value:",
+    label = "Update selected value:",
     choices = month.name
   ),
   verbatimTextOutput("res2"),
-  radioButtons("selected", "Selected value:", month.name, inline = TRUE)
+  radioButtons("selected", "Selected value:", month.name, inline = TRUE),
+  
+  virtualSelectInput(
+    inputId = "sel3",
+    label = "Update choices:",
+    choices = tolower(month.name)
+  ),
+  verbatimTextOutput("res3"),
+  radioButtons("choices", "Choices:", c("lowercase", "UPPERCASE"), inline = TRUE)
   
 )
 
@@ -63,12 +78,24 @@ server <- function(input, output, session) {
   })
   observe({
     req(input$label_html)
-    updateVirtualSelect(inputId = "sel1", label = tags$span(input$label_html, style = "color: red;"))
+    updateVirtualSelect(
+      inputId = "sel1",
+      label = tags$span(input$label_html, style = "color: red;")
+    )
   })
   
   output$res2 <- renderPrint(input$sel2)
   observe({
     updateVirtualSelect(inputId = "sel2", selected = input$selected)
+  })
+  
+  output$res3 <- renderPrint(input$sel3)
+  observe({
+    if (identical(input$choices, "lowercase")) {
+      updateVirtualSelect(inputId = "sel3", choices = tolower(month.name))
+    } else {
+      updateVirtualSelect(inputId = "sel3", choices = toupper(month.name))
+    }
   })
 }
 

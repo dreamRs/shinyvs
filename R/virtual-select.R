@@ -102,12 +102,16 @@ virtualSelectInput <- function(inputId,
 #' @example examples/update.R
 updateVirtualSelect <- function(inputId,
                                 label = NULL,
+                                choices = NULL,
                                 selected = NULL,
                                 session = shiny::getDefaultReactiveDomain()) {
   if (!is.null(label))
     label <- doRenderTags(label)
+  if (!is.null(choices))
+    choices <- process_choices(choices)
   message <- dropNulls(list(
     label = label,
+    options = choices,
     selected = selected
   ))
   session$sendInputMessage(inputId, message)
