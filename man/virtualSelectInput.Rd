@@ -56,7 +56,7 @@ single-select lists and no values for multiple select lists.}
 see \code{\link[shiny:reexports]{validateCssUnit()}}.}
 }
 \value{
-A \code{shiny.tag.list} object that can be used in a UI definition.
+A \code{shiny.tag} object that can be used in a UI definition.
 }
 \description{
 A select dropdown widget made for performance,

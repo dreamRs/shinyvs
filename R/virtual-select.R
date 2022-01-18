@@ -1,4 +1,14 @@
 
+#' @importFrom htmltools htmlDependency
+html_dependency_virtualselect <- function() {
+  htmlDependency(
+    name = "virtual-select",
+    version = "1.0.24",
+    src = c(file = system.file("packer", package = "shinyvs")),
+    script = "virtual-select.js"
+  )
+}
+
 #' @title Virtual Select Input
 #'
 #' @description A select dropdown widget made for performance,
@@ -18,10 +28,10 @@
 #'  [virtual-select documentation](https://sa-si-dev.github.io/virtual-select/#/properties) for a full list of options.
 #' @param inline Display inline with label or not.
 #'
-#' @return A `shiny.tag.list` object that can be used in a UI definition.
+#' @return A `shiny.tag` object that can be used in a UI definition.
 #' @export
 #'
-#' @importFrom htmltools tags tagList css validateCssUnit htmlDependency
+#' @importFrom htmltools tags css validateCssUnit
 #' @importFrom shiny restoreInput
 #' @importFrom jsonlite toJSON
 #'
@@ -53,7 +63,7 @@ virtualSelectInput <- function(inputId,
       ...
     )
   )
-  vsTag <- tags$div(
+  tags$div(
     class = "form-group shiny-input-container",
     style = css(width = validateCssUnit(width)),
     tags$label(
@@ -76,14 +86,9 @@ virtualSelectInput <- function(inputId,
         `data-for` = inputId,
         toJSON(data, auto_unbox = TRUE, json_verbatim = TRUE)
       )
-    )
+    ),
+    html_dependency_virtualselect()
   )
-  tagList(vsTag, htmlDependency(
-    name = "virtual-select",
-    version = "1.0.24",
-    src = c(file = system.file("packer", package = "shinyvs")),
-    script = "virtual-select.js"
-  ))
 }
 
 
@@ -95,7 +100,7 @@ virtualSelectInput <- function(inputId,
 #'
 #' @return No value.
 #' @export
-#' 
+#'
 #' @importFrom shiny getDefaultReactiveDomain
 #' @importFrom htmltools doRenderTags
 #'
