@@ -117,7 +117,7 @@ updateVirtualSelect <- function(inputId,
   message <- dropNulls(list(
     label = label,
     options = choices,
-    selected = selected
+    value = selected
   ))
   session$sendInputMessage(inputId, message)
 }

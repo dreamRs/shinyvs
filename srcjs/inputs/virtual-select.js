@@ -37,16 +37,12 @@ $.extend(virtualSelectBinding, {
     $(el).off(".virtualSelectBinding");
   },
   receiveMessage: (el, data) => {
-    
+
     if (data.hasOwnProperty("label")) {
       var label = document.getElementById(el.id + "-label");
       label.innerHTML = data.label;
     }
-    
-    if (data.hasOwnProperty("selected")) {
-      el.setValue(data.selected);
-    }
-    
+
     if (data.hasOwnProperty("options")) {
       var options = data.options;
       var newOptions;
@@ -65,7 +61,11 @@ $.extend(virtualSelectBinding, {
       }
       el.setOptions(newOptions);
     }
-    
+
+    if (data.hasOwnProperty("value")) {
+      el.setValue(data.value);
+    }
+
   },
   initialize: (el) => {
     var data = el.querySelector('script[data-for="' + el.id + '"]');
