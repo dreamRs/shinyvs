@@ -9,6 +9,59 @@ html_dependency_virtualselect <- function() {
   )
 }
 
+
+#' Prepare choices for [virtualSelectInput()]
+#'
+#' @param .data An object of type [data.frame()].
+#' @param label Variable to use as labels (displayed to user).
+#' @param value Variable to use as values (retrieved server-side).
+#' @param group_by Variable identifying groups to use option group feature.
+#' @param description Optional variable allowing to show a text under the labels.
+#' @param alias Optional variable containing text to use with search feature.
+#'
+#' @return A `list` to use as `choices` argument of [virtualSelectInput()].
+#' @export
+#'
+#' @example examples/prepare-choices.R
+prepare_choices <- function(.data,
+                            label,
+                            value,
+                            group_by = NULL,
+                            description = NULL,
+                            alias = NULL) {
+  args <- lapply(
+    X = enexprs(
+      label = label,
+      value = value,
+      group_by = group_by,
+      description = description,
+      alias = alias
+    ),
+    FUN = eval_tidy,
+    data = as.data.frame(.data)
+  )
+  args <- dropNulls(args)
+  if (!is_null(args$group_by)) {
+    type <- "transpose_group"
+    groups <- args$group_by
+    args$group_by <- NULL
+    args <- lapply(
+      X = unique(groups),
+      FUN = function(group) {
+        list(
+          label = group,
+          options = lapply(args, `[`, groups == group)
+        )
+      }
+    )
+  } else {
+    type <- "transpose"
+  }
+  structure(list(choices = args, type = type), class = c("list", "vs_choices"))
+}
+
+
+
 #' @title Virtual Select Input
 #'
 #' @description A select dropdown widget made for performance,
