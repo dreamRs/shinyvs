@@ -42,7 +42,7 @@ library(shinyvs)
 
 ui <- fluidPage(
   tags$h2("Virtual Select (update)"),
-  
+
   virtualSelectInput(
     inputId = "sel1",
     label = "Update label:",
@@ -51,7 +51,7 @@ ui <- fluidPage(
   verbatimTextOutput("res1"),
   textInput("label_text", label = "With text:"),
   textInput("label_html", label = "With HTML:"),
-  
+
   virtualSelectInput(
     inputId = "sel2",
     label = "Update selected value:",
@@ -59,15 +59,23 @@ ui <- fluidPage(
   ),
   verbatimTextOutput("res2"),
   radioButtons("selected", "Selected value:", month.name, inline = TRUE),
-  
+
   virtualSelectInput(
     inputId = "sel3",
     label = "Update choices:",
     choices = tolower(month.name)
   ),
   verbatimTextOutput("res3"),
-  radioButtons("choices", "Choices:", c("lowercase", "UPPERCASE"), inline = TRUE)
-  
+  radioButtons("choices", "Choices:", c("lowercase", "UPPERCASE"), inline = TRUE),
+
+  virtualSelectInput(
+    inputId = "sel4",
+    label = "Update choices + selected:",
+    choices = tolower(month.name)
+  ),
+  verbatimTextOutput("res4"),
+  radioButtons("choices_select", "Choices:", c("lowercase", "UPPERCASE"), inline = TRUE)
+
 )
 
 server <- function(input, output, session) {
@@ -83,12 +91,12 @@ server <- function(input, output, session) {
       label = tags$span(input$label_html, style = "color: red;")
     )
   })
-  
+
   output$res2 <- renderPrint(input$sel2)
   observe({
     updateVirtualSelect(inputId = "sel2", selected = input$selected)
   })
-  
+
   output$res3 <- renderPrint(input$sel3)
   observe({
     if (identical(input$choices, "lowercase")) {
@@ -96,6 +104,17 @@ server <- function(input, output, session) {
     } else {
       updateVirtualSelect(inputId = "sel3", choices = toupper(month.name))
     }
+  })
+
+  output$res4 <- renderPrint(input$sel4)
+  observe({
+    if (identical(input$choices_select, "lowercase")) {
+      choices <- tolower(month.name)
+    } else {
+      choices <- toupper(month.name)
+    }
+    selected <- sample(choices, 1)
+    updateVirtualSelect(inputId = "sel4", choices = choices, selected = selected)
   })
 }
 

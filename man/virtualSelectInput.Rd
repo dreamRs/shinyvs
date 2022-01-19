@@ -16,6 +16,7 @@ virtualSelectInput(
   showValueAsTags = FALSE,
   optionsCount = 10,
   ...,
+  html = FALSE,
   inline = FALSE,
   width = NULL
 )
@@ -49,6 +50,8 @@ single-select lists and no values for multiple select lists.}
 
 \item{...}{Other arguments passed to JavaScript method, see
 \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select documentation} for a full list of options.}
+
+\item{html}{Allow usage of HTML in choices.}
 
 \item{inline}{Display inline with label or not.}
 

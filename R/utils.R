@@ -29,6 +29,7 @@ process_choices <- function(choices) {
           FUN = function(i) {
             this <- choices[[i]]
             values <- unname(unlist(this, use.names = FALSE))
+            values <- as.character(values)
             list(
               label = names(choices)[i],
               options = list(
@@ -41,6 +42,7 @@ process_choices <- function(choices) {
       )
     } else {
       values <- unname(unlist(choices, use.names = FALSE))
+      values <- as.character(values)
       output <- list(
         type = "transpose",
         choices = list(

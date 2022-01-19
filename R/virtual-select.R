@@ -26,12 +26,13 @@ html_dependency_virtualselect <- function() {
 #' @param optionsCount No.of options to show on viewport.
 #' @param ... Other arguments passed to JavaScript method, see
 #'  [virtual-select documentation](https://sa-si-dev.github.io/virtual-select/#/properties) for a full list of options.
+#' @param html Allow usage of HTML in choices.
 #' @param inline Display inline with label or not.
 #'
 #' @return A `shiny.tag` object that can be used in a UI definition.
 #' @export
 #'
-#' @importFrom htmltools tags css validateCssUnit
+#' @importFrom htmltools tags css validateCssUnit HTML
 #' @importFrom shiny restoreInput
 #' @importFrom jsonlite toJSON
 #'
@@ -47,6 +48,7 @@ virtualSelectInput <- function(inputId,
                                showValueAsTags = FALSE,
                                optionsCount = 10,
                                ...,
+                               html = FALSE,
                                inline = FALSE,
                                width = NULL) {
   selected <- restoreInput(id = inputId, default = selected)
@@ -63,6 +65,9 @@ virtualSelectInput <- function(inputId,
       ...
     )
   )
+  data <- toJSON(data, auto_unbox = TRUE, json_verbatim = TRUE)
+  if (isTRUE(html))
+    data <- HTML(data)
   tags$div(
     class = "form-group shiny-input-container",
     style = css(width = validateCssUnit(width)),
@@ -84,7 +89,7 @@ virtualSelectInput <- function(inputId,
       tags$script(
         type = "application/json",
         `data-for` = inputId,
-        toJSON(data, auto_unbox = TRUE, json_verbatim = TRUE)
+        data
       )
     ),
     html_dependency_virtualselect()

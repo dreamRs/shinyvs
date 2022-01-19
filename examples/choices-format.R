@@ -3,28 +3,28 @@ library(shinyvs)
 
 ui <- fluidPage(
   tags$h2("Virtual Select (choices format)"),
-  
+
   virtualSelectInput(
     inputId = "sel1",
     label = "Simple vector:",
     choices = month.name
   ),
   verbatimTextOutput("res1"),
-  
+
   virtualSelectInput(
     inputId = "sel2",
     label = "Named vector:",
     choices = setNames(month.abb, month.name)
   ),
   verbatimTextOutput("res2"),
-  
+
   virtualSelectInput(
     inputId = "sel3",
     label = "Named list:",
     choices = setNames(as.list(month.abb), month.name)
   ),
   verbatimTextOutput("res3"),
-  
+
   virtualSelectInput(
     inputId = "sel4",
     label = "With groups:",
@@ -36,7 +36,7 @@ ui <- fluidPage(
     )
   ),
   verbatimTextOutput("res4"),
-  
+
   virtualSelectInput(
     inputId = "sel5",
     label = "Already formated list:",
@@ -45,7 +45,21 @@ ui <- fluidPage(
       list(label = "February", value = "feb")
     )
   ),
-  verbatimTextOutput("res5")
+  verbatimTextOutput("res5"),
+
+  virtualSelectInput(
+    inputId = "sel6",
+    label = "With HTML in choices:",
+    choices = setNames(
+      as.list(month.abb),
+      sprintf(
+        "<b style='color: red;'>%s</span>",
+        month.name
+      )
+    ),
+    html = TRUE
+  ),
+  verbatimTextOutput("res6")
 )
 
 server <- function(input, output, session) {
@@ -54,6 +68,7 @@ server <- function(input, output, session) {
   output$res3 <- renderPrint(input$sel3)
   output$res4 <- renderPrint(input$sel4)
   output$res5 <- renderPrint(input$sel5)
+  output$res6 <- renderPrint(input$sel6)
 }
 
 if (interactive())

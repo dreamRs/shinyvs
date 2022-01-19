@@ -2,6 +2,7 @@
 
 export(updateVirtualSelect)
 export(virtualSelectInput)
+importFrom(htmltools,HTML)
 importFrom(htmltools,css)
 importFrom(htmltools,doRenderTags)
 importFrom(htmltools,htmlDependency)
