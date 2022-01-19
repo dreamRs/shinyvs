@@ -22,6 +22,8 @@ html_dependency_virtualselect <- function() {
 #' @return A `list` to use as `choices` argument of [virtualSelectInput()].
 #' @export
 #'
+#' @importFrom rlang enexprs eval_tidy is_null
+#'
 #' @example examples/prepare-choices.R
 prepare_choices <- function(.data,
                             label,
