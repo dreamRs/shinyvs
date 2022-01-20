@@ -69,16 +69,23 @@ prepare_choices <- function(.data,
 #' @description A select dropdown widget made for performance,
 #'  based on [virtual-select](https://github.com/sa-si-dev/virtual-select).
 #'
-#' @param choices List of choices, **warning** format is a little different than [shiny::selectInput()].
+#' @param choices List of values to select from.
 #' You can use:
 #'  * `vector` use a simple vector for better performance.
-#'  * `list` custom list allowing to use more options, must correspond to [virtual-select specifications](https://sa-si-dev.github.io/virtual-select/#/properties)
+#'  * `named list` / `named vector` in the same way as with [shiny::selectInput()]
+#'  * custom formatted `list` allowing to use more options, must correspond to [virtual-select specifications](https://sa-si-dev.github.io/virtual-select/#/properties)
+#'  * output of [prepare_choices()]
 #' @inheritParams shiny::selectInput
 #' @param search Enable search feature.
 #' @param hideClearButton Hide clear value button.
+#' @param autoSelectFirstOption Select first option by default on load.
 #' @param showSelectedOptionsFirst Show selected options at the top of the dropbox.
 #' @param showValueAsTags Show each selected values as tags with remove icon.
 #' @param optionsCount No.of options to show on viewport.
+#' @param noOfDisplayValues Maximum no.of values to show in the tooltip for multi-select.
+#' @param allowNewOption Allow to add new option by searching.
+#' @param disableSelectAll Disable select all feature of multiple select.
+#' @param disableOptionGroupCheckbox Disable option group title checkbox.
 #' @param ... Other arguments passed to JavaScript method, see
 #'  [virtual-select documentation](https://sa-si-dev.github.io/virtual-select/#/properties) for a full list of options.
 #' @param html Allow usage of HTML in choices.
@@ -98,10 +105,15 @@ virtualSelectInput <- function(inputId,
                                selected = NULL,
                                multiple = FALSE,
                                search = FALSE,
-                               hideClearButton = FALSE,
+                               hideClearButton = !multiple,
+                               autoSelectFirstOption = !multiple,
                                showSelectedOptionsFirst = FALSE,
                                showValueAsTags = FALSE,
                                optionsCount = 10,
+                               noOfDisplayValues = 50,
+                               allowNewOption = FALSE,
+                               disableSelectAll = FALSE,
+                               disableOptionGroupCheckbox = FALSE,
                                ...,
                                html = FALSE,
                                inline = FALSE,
@@ -109,16 +121,21 @@ virtualSelectInput <- function(inputId,
   selected <- restoreInput(id = inputId, default = selected)
   data <- list(
     options = process_choices(choices),
-    config = list(
+    config = dropNulls(list(
       multiple = multiple,
       search = search,
       selectedValue = selected,
       hideClearButton = hideClearButton,
+      autoSelectFirstOption = autoSelectFirstOption,
       showSelectedOptionsFirst = showSelectedOptionsFirst,
       showValueAsTags = showValueAsTags,
       optionsCount = optionsCount,
+      noOfDisplayValues = noOfDisplayValues,
+      allowNewOption = allowNewOption,
+      disableSelectAll = disableSelectAll,
+      disableOptionGroupCheckbox = disableOptionGroupCheckbox,
       ...
-    )
+    ))
   )
   data <- toJSON(data, auto_unbox = TRUE, json_verbatim = TRUE)
   if (isTRUE(html))

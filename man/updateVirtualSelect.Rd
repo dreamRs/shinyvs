@@ -17,11 +17,13 @@ updateVirtualSelect(
 
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
-\item{choices}{List of choices, \strong{warning} format is a little different than \code{\link[shiny:selectInput]{shiny::selectInput()}}.
+\item{choices}{List of values to select from.
 You can use:
 \itemize{
 \item \code{vector} use a simple vector for better performance.
-\item \code{list} custom list allowing to use more options, must correspond to \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select specifications}
+\item \verb{named list} / \verb{named vector} in the same way as with \code{\link[shiny:selectInput]{shiny::selectInput()}}
+\item custom formatted \code{list} allowing to use more options, must correspond to \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select specifications}
+\item output of \code{\link[=prepare_choices]{prepare_choices()}}
 }}
 
 \item{selected}{The initially selected value (or multiple values if \code{multiple = TRUE}). If not specified then defaults to the first value for

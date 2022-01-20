@@ -16,7 +16,6 @@ ui <- fluidPage(
     inputId = "multiple",
     label = "Multiple select:",
     choices = setNames(month.abb, month.name),
-    selected = "Jun",
     multiple = TRUE
   ),
   verbatimTextOutput("res_multiple")

@@ -11,10 +11,15 @@ virtualSelectInput(
   selected = NULL,
   multiple = FALSE,
   search = FALSE,
-  hideClearButton = FALSE,
+  hideClearButton = !multiple,
+  autoSelectFirstOption = !multiple,
   showSelectedOptionsFirst = FALSE,
   showValueAsTags = FALSE,
   optionsCount = 10,
+  noOfDisplayValues = 50,
+  allowNewOption = FALSE,
+  disableSelectAll = FALSE,
+  disableOptionGroupCheckbox = FALSE,
   ...,
   html = FALSE,
   inline = FALSE,
@@ -26,11 +31,13 @@ virtualSelectInput(
 
 \item{label}{Display label for the control, or \code{NULL} for no label.}
 
-\item{choices}{List of choices, \strong{warning} format is a little different than \code{\link[shiny:selectInput]{shiny::selectInput()}}.
+\item{choices}{List of values to select from.
 You can use:
 \itemize{
 \item \code{vector} use a simple vector for better performance.
-\item \code{list} custom list allowing to use more options, must correspond to \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select specifications}
+\item \verb{named list} / \verb{named vector} in the same way as with \code{\link[shiny:selectInput]{shiny::selectInput()}}
+\item custom formatted \code{list} allowing to use more options, must correspond to \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select specifications}
+\item output of \code{\link[=prepare_choices]{prepare_choices()}}
 }}
 
 \item{selected}{The initially selected value (or multiple values if \code{multiple = TRUE}). If not specified then defaults to the first value for
@@ -42,11 +49,21 @@ single-select lists and no values for multiple select lists.}
 
 \item{hideClearButton}{Hide clear value button.}
 
+\item{autoSelectFirstOption}{Select first option by default on load.}
+
 \item{showSelectedOptionsFirst}{Show selected options at the top of the dropbox.}
 
 \item{showValueAsTags}{Show each selected values as tags with remove icon.}
 
 \item{optionsCount}{No.of options to show on viewport.}
+
+\item{noOfDisplayValues}{Maximum no.of values to show in the tooltip for multi-select.}
+
+\item{allowNewOption}{Allow to add new option by searching.}
+
+\item{disableSelectAll}{Disable select all feature of multiple select.}
+
+\item{disableOptionGroupCheckbox}{Disable option group title checkbox.}
 
 \item{...}{Other arguments passed to JavaScript method, see
 \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select documentation} for a full list of options.}
@@ -84,7 +101,6 @@ ui <- fluidPage(
     inputId = "multiple",
     label = "Multiple select:",
     choices = setNames(month.abb, month.name),
-    selected = "Jun",
     multiple = TRUE
   ),
   verbatimTextOutput("res_multiple")
