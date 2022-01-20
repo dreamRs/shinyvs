@@ -3,7 +3,6 @@ import "shiny";
 import "virtual-select-plugin/dist/virtual-select.min.css";
 import "virtual-select-plugin/dist/virtual-select.min.js";
 
-
 function transpose(data) {
   var res = [];
   var key, i;
@@ -16,13 +15,33 @@ function transpose(data) {
   return res;
 }
 
+function makeOptions(options) {
+  var newOptions;
+  if (options.type == "vector") {
+    newOptions = options.choices.map(x => {
+      return { label: x, value: x };
+    });
+  } else if (options.type == "transpose") {
+    newOptions = transpose(options.choices);
+  } else if (options.type == "transpose_group") {
+    var choices = options.choices;
+    for (var i = 0; i < choices.length; i++) {
+      choices[i].options = transpose(choices[i].options);
+    }
+    newOptions = choices;
+  } else {
+    newOptions = options.choices;
+  }
+  return newOptions;
+}
+
 var virtualSelectBinding = new Shiny.InputBinding();
 
 $.extend(virtualSelectBinding, {
-  find: (scope) => {
+  find: scope => {
     return $(scope).find(".virtual-select");
   },
-  getValue: (el) => {
+  getValue: el => {
     return el.value;
   },
   setValue: (el, value) => {
@@ -33,61 +52,36 @@ $.extend(virtualSelectBinding, {
       callback();
     });
   },
-  unsubscribe: (el) => {
+  unsubscribe: el => {
     $(el).off(".virtualSelectBinding");
   },
   receiveMessage: (el, data) => {
-
     if (data.hasOwnProperty("label")) {
       var label = document.getElementById(el.id + "-label");
       label.innerHTML = data.label;
     }
 
     if (data.hasOwnProperty("options")) {
-      var options = data.options;
-      var newOptions;
-      if (options.type == "vector") {
-        newOptions = options.choices.map((x) => {return {label: x, value: x};});
-      } else if (options.type == "transpose") {
-        newOptions = transpose(options.choices);
-      } else if (options.type == "transpose_group") {
-        var choices = options.choices;
-        for (var i = 0; i < choices.length; i++) {
-          choices[i].options = transpose(choices[i].options);
-        }
-        newOptions = choices;
-      } else {
-        newOptions = options.choices;
-      }
+      var newOptions = makeOptions(data.options);
       el.setOptions(newOptions);
     }
 
     if (data.hasOwnProperty("value")) {
       el.setValue(data.value);
     }
-
   },
-  initialize: (el) => {
+  initialize: el => {
     var data = el.querySelector('script[data-for="' + el.id + '"]');
     data = JSON.parse(data.text);
     var config = data.config;
-    var options = data.options;
-    if (options.type == "vector") {
-      config.options = options.choices.map((x) => {return {label: x, value: x};});
-    } else if (options.type == "transpose") {
-      config.options = transpose(options.choices);
-    } else if (options.type == "transpose_group") {
-      var choices = options.choices;
-      for (var i = 0; i < choices.length; i++) {
-        choices[i].options = transpose(choices[i].options);
-      }
-      config.options = choices;
-    } else {
-      config.options = options.choices;
-    }
+    config.options = makeOptions(data.options);
     config.ele = el;
     VirtualSelect.init(config);
   }
 });
 
-Shiny.inputBindings.register(virtualSelectBinding, "shinyvs.virtualSelectBinding");
+Shiny.inputBindings.register(
+  virtualSelectBinding,
+  "shinyvs.virtualSelectBinding"
+);
+
