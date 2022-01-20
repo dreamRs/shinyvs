@@ -117,3 +117,9 @@ server <- function(input, output, session) {
 if (interactive())
   shinyApp(ui, server)
 }
+\seealso{
+\itemize{
+\item \code{\link[=demoVirtualSelect]{demoVirtualSelect()}} for demo apps
+\item \code{\link[=updateVirtualSelect]{updateVirtualSelect()}} for updating from server
+}
+}

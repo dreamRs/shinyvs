@@ -24,7 +24,7 @@ html_dependency_virtualselect <- function() {
 #'
 #' @importFrom rlang enexprs eval_tidy is_null
 #'
-#' @example examples/prepare-choices.R
+#' @example inst/examples/prepare-choices/app.R
 prepare_choices <- function(.data,
                             label,
                             value,
@@ -93,13 +93,18 @@ prepare_choices <- function(.data,
 #' @param inline Display inline with label or not.
 #'
 #' @return A `shiny.tag` object that can be used in a UI definition.
+#' 
+#' @seealso 
+#'  * [demoVirtualSelect()] for demo apps
+#'  * [updateVirtualSelect()] for updating from server
+#' 
 #' @export
 #'
 #' @importFrom htmltools tags css validateCssUnit HTML
 #' @importFrom shiny restoreInput
 #' @importFrom jsonlite toJSON
 #'
-#' @example examples/default.R
+#' @example inst/examples/default/app.R
 virtualSelectInput <- function(inputId,
                                label,
                                choices,
@@ -185,7 +190,7 @@ virtualSelectInput <- function(inputId,
 #' @importFrom shiny getDefaultReactiveDomain
 #' @importFrom htmltools doRenderTags
 #'
-#' @example examples/update.R
+#' @example inst/examples/update/app.R
 updateVirtualSelect <- function(inputId,
                                 label = NULL,
                                 choices = NULL,
@@ -206,4 +211,40 @@ updateVirtualSelect <- function(inputId,
 }
 
 
+
+
+#' Demo for [virtualSelectInput()]
+#'
+#' @param name Name of the demo app to launch.
+#'
+#' @return No value.
+#' @export
+#' 
+#' @importFrom shiny runApp shinyAppFile
+#'
+#' @examples
+#' \dontrun{
+#' 
+#' # Default usage
+#' demoVirtualSelect("default")
+#' 
+#' # Update widget from server
+#' demoVirtualSelect("update")
+#' 
+#' # Differents ways of specifying choices
+#' demoVirtualSelect("choices-format")
+#' 
+#' # Prepare choices from a data.frame
+#' demoVirtualSelect("prepare-choices")
+#' 
+#' }
+demoVirtualSelect <- function(name = c("default", "update", "choices-format", "prepare-choices")) {
+  name <- match.arg(name )
+  runApp(
+    shinyAppFile(
+      appFile = system.file("examples", name, "app.R", package = "shinyvs")
+    ), 
+    display.mode = "showcase"
+  )
+}
 
