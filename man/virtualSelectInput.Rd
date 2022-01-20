@@ -20,6 +20,7 @@ virtualSelectInput(
   allowNewOption = FALSE,
   disableSelectAll = FALSE,
   disableOptionGroupCheckbox = FALSE,
+  disabled = FALSE,
   ...,
   html = FALSE,
   inline = FALSE,
@@ -64,6 +65,8 @@ single-select lists and no values for multiple select lists.}
 \item{disableSelectAll}{Disable select all feature of multiple select.}
 
 \item{disableOptionGroupCheckbox}{Disable option group title checkbox.}
+
+\item{disabled}{Disable entire dropdown.}
 
 \item{...}{Other arguments passed to JavaScript method, see
 \href{https://sa-si-dev.github.io/virtual-select/#/properties}{virtual-select documentation} for a full list of options.}

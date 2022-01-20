@@ -35,7 +35,15 @@ ui <- fluidPage(
     choices = tolower(month.name)
   ),
   verbatimTextOutput("res4"),
-  radioButtons("choices_select", "Choices:", c("lowercase", "UPPERCASE"), inline = TRUE)
+  radioButtons("choices_select", "Choices:", c("lowercase", "UPPERCASE"), inline = TRUE),
+  
+  virtualSelectInput(
+    inputId = "sel5",
+    label = "Disable / enable:",
+    choices = tolower(month.name)
+  ),
+  verbatimTextOutput("res5"),
+  checkboxInput("disable", "Disable", value = FALSE)
 
 )
 
@@ -76,6 +84,15 @@ server <- function(input, output, session) {
     }
     selected <- sample(choices, 1)
     updateVirtualSelect(inputId = "sel4", choices = choices, selected = selected)
+  })
+  
+  output$res5 <- renderPrint(input$sel5)
+  observe({
+    if (isTRUE(input$disable)) {
+      updateVirtualSelect(inputId = "sel5", disable = TRUE)
+    } else {
+      updateVirtualSelect(inputId = "sel5", disable = FALSE)
+    }
   })
 }
 
