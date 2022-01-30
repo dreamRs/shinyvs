@@ -93,11 +93,11 @@ prepare_choices <- function(.data,
 #' @param inline Display inline with label or not.
 #'
 #' @return A `shiny.tag` object that can be used in a UI definition.
-#' 
-#' @seealso 
+#'
+#' @seealso
 #'  * [demoVirtualSelect()] for demo apps
 #'  * [updateVirtualSelect()] for updating from server
-#' 
+#'
 #' @export
 #'
 #' @importFrom htmltools tags css validateCssUnit HTML
@@ -126,8 +126,9 @@ virtualSelectInput <- function(inputId,
                                inline = FALSE,
                                width = NULL) {
   selected <- restoreInput(id = inputId, default = selected)
+  choices <- process_choices(choices)
   data <- list(
-    options = process_choices(choices),
+    options = toJSON(choices, auto_unbox = FALSE, json_verbatim = TRUE),
     config = dropNulls(list(
       multiple = multiple,
       search = search,
@@ -219,31 +220,31 @@ updateVirtualSelect <- function(inputId,
 #'
 #' @return No value.
 #' @export
-#' 
+#'
 #' @importFrom shiny runApp shinyAppFile
 #'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' # Default usage
 #' demoVirtualSelect("default")
-#' 
+#'
 #' # Update widget from server
 #' demoVirtualSelect("update")
-#' 
+#'
 #' # Differents ways of specifying choices
 #' demoVirtualSelect("choices-format")
-#' 
+#'
 #' # Prepare choices from a data.frame
 #' demoVirtualSelect("prepare-choices")
-#' 
+#'
 #' }
 demoVirtualSelect <- function(name = c("default", "update", "choices-format", "prepare-choices")) {
   name <- match.arg(name )
   runApp(
     shinyAppFile(
       appFile = system.file("examples", name, "app.R", package = "shinyvs")
-    ), 
+    ),
     display.mode = "showcase"
   )
 }
