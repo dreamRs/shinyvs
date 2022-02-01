@@ -200,8 +200,10 @@ updateVirtualSelect <- function(inputId,
                                 session = shiny::getDefaultReactiveDomain()) {
   if (!is.null(label))
     label <- doRenderTags(label)
-  if (!is.null(choices))
+  if (!is.null(choices)) {
     choices <- process_choices(choices)
+    choices <- toJSON(choices, auto_unbox = FALSE, json_verbatim = TRUE)
+  }
   message <- dropNulls(list(
     label = label,
     options = choices,
