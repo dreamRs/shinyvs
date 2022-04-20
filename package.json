@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/pvictor/shinyvs#readme",
   "devDependencies": {
-    "virtual-select-plugin": "^1.0.25",
+    "virtual-select-plugin": "^1.0.28",
     "css-loader": "^6.5.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.66.0",
