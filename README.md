@@ -8,6 +8,9 @@
 Virtual Select widget for [shiny](https://shiny.rstudio.com/) applications built for performance. Powered by [virtual-select](https://github.com/sa-si-dev/virtual-select).
 
 
+:rotating_light: :rotating_light: :rotating_light: This widget is now available in package [shinyWidgets](https://github.com/dreamRs/shinyWidgets) (>= 0.7.0 on CRAN) :rotating_light: :rotating_light: :rotating_light: 
+
+
 ## Installation
 
 You can install the development version of shinyvs from [GitHub](https://github.com/dreamRs/shinyvs) with:
